@@ -13,6 +13,13 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/components/Loading/Loading.styled.js",
+    "src/components/Loading/Loading.styled.js"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
