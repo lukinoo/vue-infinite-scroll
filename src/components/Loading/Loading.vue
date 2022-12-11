@@ -9,6 +9,7 @@
 </template>
 <style scoped lang="less">
 @white_color: #fff;
+@size: 1rem;
 
 .loader {
   display: inline-block;
@@ -18,8 +19,8 @@
   div {
     display: block;
     position: absolute;
-    width: 1rem;
-    height: 1rem;
+    width: @size;
+    height: @size;
     border: 0.2rem solid @white_color;
     border-radius: 50%;
     border-color: @white_color transparent transparent transparent;
