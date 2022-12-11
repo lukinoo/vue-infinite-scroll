@@ -3,20 +3,28 @@ import InfiniteScrollVue from "./components/InfiniteScroll/InfiniteScroll.vue";
 import Loading from "./components/Loading/Loading.vue";
 import { TMovies } from "./types";
 import { useFetch } from "./hooks/useFetch";
-import { onBeforeMount } from "vue";
+import { onMounted, ref } from "vue";
 
-const apikey = `https://omdbapi.com/?s=spider+man&page=1&apikey=${
+const movies = ref<TMovies[] | null>(null);
+const loading = ref<boolean>(true);
+
+const API_URL = `https://omdbapi.com/?s=spider+man&page=1&apikey=${
   import.meta.env.VITE_API_KEY as string
 }`;
 
-// onBeforeMount(async () => {
-//   const { data, isLoading } = await useFetch<TMovies>(x);
-// });
+onMounted(async () => {
+  const { data, isLoading } = await useFetch<TMovies>(API_URL);
+
+  movies.value = data.value;
+  loading.value = isLoading.value;
+
+  console.log(movies.value);
+});
 </script>
 
 <template>
   <InfiniteScrollVue />
-  <!-- <Loading /> -->
+  <Loading v-if="loading" />
 </template>
 
 <style scoped></style>
