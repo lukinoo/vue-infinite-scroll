@@ -21,8 +21,6 @@ export const useFetch = async <T>(url: string) => {
       state.data = Search;
 
       state.isLoading = false;
-
-      console.log(state.isLoading);
     } catch (err) {
       console.error(err);
     }
