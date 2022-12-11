@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+import InfiniteScrollVue from "./view/InfiniteScroll/InfiniteScroll.vue";
 </script>
 
 <template>
-  <HelloWorld />
+  <InfiniteScrollVue />
 </template>
 
 <style scoped></style>
