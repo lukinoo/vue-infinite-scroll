@@ -19,7 +19,7 @@ defineProps<Props>();
       :movie="movie"
     />
   </div>
-  <!-- <Loading v-if="loading" /> -->
+  <Loading v-if="loading" />
 </template>
 <style scoped lang="less">
 @primaryBlack: #000;
