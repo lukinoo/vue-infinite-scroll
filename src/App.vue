@@ -1,23 +1,22 @@
 <script setup lang="ts">
 import InfiniteScrollVue from "./components/InfiniteScroll/InfiniteScroll.vue";
-import { TMovies } from "./types";
 import { onMounted, onUnmounted, ref } from "vue";
+import { TCards } from "./types";
 
-const movies = ref<TMovies[] | null>([]);
+const cards = ref<Array<TCards> | null>([]);
 const loading = ref<boolean>(true);
 const offset = ref<number>(1);
 
-const API_URI = `https://omdbapi.com/?s=spider+man&apikey=${
-  import.meta.env.VITE_API_KEY as string
-}`;
+const API_URI = "https://pokeapi.co/api/v2/pokemon?limit=10&offset=";
 
 const handleFetch = async () => {
   loading.value = true;
-  fetch(API_URI + "&page=" + offset.value)
+  fetch(API_URI + offset.value)
     .then((res) => res.json())
     .then((data) => {
-      movies.value?.push(...data.Search);
+      cards.value?.push(...data.results);
       loading.value = false;
+      console.log(cards.value);
     })
     .catch((err) => {
       console.error(err);
@@ -29,7 +28,7 @@ const handleScroll = (e: Event) => {
   const { scrollTop, scrollHeight, clientHeight } =
     document.documentElement as HTMLElement;
 
-  if (scrollTop + clientHeight >= scrollHeight - 10) {
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
     offset.value += 1;
     handleFetch();
   }
@@ -45,8 +44,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <InfiniteScrollVue :loading="loading" :movies="movies" />
-  <!-- <Loading v-if="loading" /> -->
+  <InfiniteScrollVue :loading="loading" :cards="cards" />
 </template>
 
 <style scoped></style>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { TMovies } from "../../types";
+import { TCards } from "../../types";
+import Card from "../Card/Card.vue";
 import Loading from "../Loading/Loading.vue";
-import MovieVue from "../Movie/Movie.vue";
 
 interface Props {
-  movies: Array<TMovies> | null;
+  cards: Array<TCards> | null;
   loading: boolean;
 }
 
@@ -12,12 +12,7 @@ defineProps<Props>();
 </script>
 <template>
   <div class="container">
-    <MovieVue
-      v-if="movies !== null"
-      v-for="movie in movies"
-      :key="movie.imdbID"
-      :movie="movie"
-    />
+    <Card v-for="(card, index) in cards" :key="index" :card="card" />
   </div>
   <Loading v-if="loading" />
 </template>

@@ -1,7 +1,4 @@
-export interface TMovies {
-  Poster: string;
-  Title: string;
-  Type: string;
-  Year: string;
-  imdbID: string;
+export interface TCards {
+  name: string;
+  url: string;
 }
