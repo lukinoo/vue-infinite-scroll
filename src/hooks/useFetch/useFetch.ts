@@ -1,4 +1,4 @@
-import { reactive, toRefs } from "vue";
+import { reactive, ref, toRefs } from "vue";
 
 interface TMovies<T> {
   isLoading: boolean;
@@ -10,12 +10,13 @@ export const useFetch = async <T>(url: string) => {
     isLoading: true,
     data: null,
   });
+  const offset = ref<number>(1);
 
   const fetchData = async () => {
     state.isLoading = true;
 
     try {
-      const resp = await fetch(url);
+      const resp = await fetch(url + "&page=" + offset);
 
       const { Search } = await resp.json();
       state.data = Search;
@@ -24,6 +25,8 @@ export const useFetch = async <T>(url: string) => {
     } catch (err) {
       console.error(err);
     }
+
+    offset.value += 1;
   };
 
   await fetchData();
