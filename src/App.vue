@@ -27,7 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <InfiniteScrollVue :movies="movies" />
+  <InfiniteScrollVue :loading="loading" :movies="movies" />
   <Loading v-if="loading" />
 </template>
 
