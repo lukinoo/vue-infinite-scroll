@@ -5,25 +5,29 @@ import { TMovies } from "./types";
 import { useFetch } from "./hooks/useFetch";
 import { onMounted, ref } from "vue";
 
-const movies = ref<TMovies[] | null>(null);
+const movies = ref<TMovies[] | null>([]);
 const loading = ref<boolean>(true);
 
 const API_URL = `https://omdbapi.com/?s=spider+man&page=1&apikey=${
   import.meta.env.VITE_API_KEY as string
 }`;
 
-onMounted(async () => {
+const handleFetch = async () => {
   const { data, isLoading } = await useFetch<TMovies>(API_URL);
 
   movies.value = data.value;
   loading.value = isLoading.value;
 
   console.log(movies.value);
+};
+
+onMounted(() => {
+  handleFetch();
 });
 </script>
 
 <template>
-  <InfiniteScrollVue />
+  <InfiniteScrollVue :movies="movies" />
   <Loading v-if="loading" />
 </template>
 
