@@ -8,17 +8,15 @@ import { onMounted, ref } from "vue";
 const movies = ref<TMovies[] | null>([]);
 const loading = ref<boolean>(true);
 
-const API_URL = `https://omdbapi.com/?s=spider+man&page=1&apikey=${
+const API_URI = `https://omdbapi.com/?s=spider+man&apikey=${
   import.meta.env.VITE_API_KEY as string
 }`;
 
 const handleFetch = async () => {
-  const { data, isLoading } = await useFetch<TMovies>(API_URL);
+  const { data, isLoading } = await useFetch<TMovies>(API_URI);
 
   movies.value = data.value;
   loading.value = isLoading.value;
-
-  console.log(movies.value);
 };
 
 onMounted(() => {
