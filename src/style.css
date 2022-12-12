@@ -24,4 +24,5 @@ body::-webkit-scrollbar-thumb {
 body {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   background-color: #42b883;
+  text-align: center;
 }

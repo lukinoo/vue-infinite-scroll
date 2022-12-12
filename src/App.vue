@@ -1,32 +1,52 @@
 <script setup lang="ts">
 import InfiniteScrollVue from "./components/InfiniteScroll/InfiniteScroll.vue";
-import Loading from "./components/Loading/Loading.vue";
 import { TMovies } from "./types";
-import { useFetch } from "./hooks/useFetch";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const movies = ref<TMovies[] | null>([]);
 const loading = ref<boolean>(true);
+const offset = ref<number>(1);
 
 const API_URI = `https://omdbapi.com/?s=spider+man&apikey=${
   import.meta.env.VITE_API_KEY as string
 }`;
 
 const handleFetch = async () => {
-  const { data, isLoading } = await useFetch<TMovies>(API_URI);
+  loading.value = true;
+  fetch(API_URI + "&page=" + offset.value)
+    .then((res) => res.json())
+    .then((data) => {
+      movies.value?.push(...data.Search);
+      loading.value = false;
+    })
+    .catch((err) => {
+      console.error(err);
+      loading.value = false;
+    });
+};
 
-  movies.value = data.value;
-  loading.value = isLoading.value;
+const handleScroll = (e: Event) => {
+  const { scrollTop, scrollHeight, clientHeight } =
+    document.documentElement as HTMLElement;
+
+  if (scrollTop + clientHeight >= scrollHeight - 10) {
+    offset.value += 1;
+    handleFetch();
+  }
 };
 
 onMounted(() => {
-  handleFetch();
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
 <template>
   <InfiniteScrollVue :loading="loading" :movies="movies" />
-  <Loading v-if="loading" />
+  <!-- <Loading v-if="loading" /> -->
 </template>
 
 <style scoped></style>
